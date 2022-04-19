@@ -1,5 +1,6 @@
-import Expenses from "./components/Expenses";
+import Expenses from "./components/Expenses/Expenses";
 import "./App.css";
+import React from "react";
 
 function App() {
   const expenses = [
@@ -23,12 +24,19 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
-  return (
-    <div>
-      <h2>learning</h2>
-      <Expenses item={expenses} />
-    </div>
+
+  return React.createElement(
+    "div",
+    {},
+    React.createElement("h2", {}, "learning"),
+    React.createElement(Expenses, { item: expenses })
   );
+  // return (
+  //   <div>
+  //     <h2>learning</h2>
+  //     <Expenses item={expenses} />
+  //   </div>
+  // );
 }
 // 여기서 expense itme -> item은 Expense.js 의 props.item
 export default App;
