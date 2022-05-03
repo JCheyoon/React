@@ -1,45 +1,24 @@
 import "./App.css";
 import { useState } from "react";
+import MinutesToHours from "./components/MinutesToHours";
+import KmToMiles from "./components/KmToMiles";
 
 function App() {
-  const [minutes, setMinutes] = useState(0);
-  const [flipped, setFlipped] = useState(0);
-  const onChange = (e) => {
-    setMinutes(e.target.value);
+  const [index, setIndex] = useState("xx");
+  const onSelect = (e) => {
+    setIndex(e.target.value);
   };
-  const reset = () => {
-    return setMinutes(0);
-  };
-  const onFlip = () => {
-    return setFlipped(!flipped);
-  };
-
   return (
     <>
-      <div>
-        <h1>Super converter</h1>
-        <label htmlFor="minutes">Minutes</label>
-        <input
-          value={minutes}
-          id="minutes"
-          placeholder="Minutes"
-          type="number"
-          onChange={onChange}
-        />
-        <h4>You want to convert {minutes}</h4>
-      </div>
-      <div>
-        <label htmlFor="hours">Hours</label>
-        <input
-          value={Math.round(minutes / 60)}
-          id="hours"
-          placeholder="Hours"
-          type="number"
-          disabled
-        />
-      </div>
-      <button onClick={reset}>Rest</button>
-      <button onClick={onFlip}>Flipped</button>
+      <h1>Super converter</h1>
+      <select value={index} onChange={onSelect}>
+        <option value="xx">Select your Unit</option>
+        <option value="0">Minutes & Hours</option>
+        <option value="1">Km & Miles</option>
+      </select>
+      <hr />
+      {index === "0" ? <MinutesToHours /> : null}
+      {index === "1" ? <KmToMiles /> : null}
     </>
   );
 }
