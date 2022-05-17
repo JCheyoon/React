@@ -33,5 +33,4 @@ function App() {
     </div>
   );
 }
-// 여기서 expense itme -> item은 Expense.js 의 props.item
 export default App;
