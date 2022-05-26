@@ -1,52 +1,18 @@
-import { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import SearchBox from "./SearchBox";
+import { useState } from "react";
 
-class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      monsters: [],
-    };
-  }
-  componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((users) =>
-        this.setState(() => {
-          return { monsters: users };
-        })
-      );
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <input
-          className="search-box"
-          type="search"
-          placeholder="Search Monsters"
-          onChange={(e) => {
-            const searchString = e.target.value.toLowerCase();
-            const filteredMonsters = this.state.monsters.filter((monster) => {
-              return monster.name.toLowerCase().includes(searchString);
-            });
-            this.setState(() => {
-              return { monster: filteredMonsters };
-            });
-          }}
-        />
-        {this.state.monsters.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
+const App = () => {
+  const [] = useState();
+  const onSearchChange = (e) => {
+    const searchField = e.target.value.toLowerCase();
+  };
+  return (
+    <div className="App">
+      <h1 className="app-title">Monster Rolodex</h1>
+      <SearchBox></SearchBox>
+    </div>
+  );
+};
 
 export default App;
