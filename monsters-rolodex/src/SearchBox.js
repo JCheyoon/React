@@ -1,6 +1,11 @@
 const SearchBox = (p) => {
   return (
-    <input className="search-box" type="search" placeholder="Search Monsters" />
+    <input
+      type="search"
+      className={p.className}
+      onChange={p.onChangeHandler}
+      placeholder={p.placeholder}
+    />
   );
 };
 export default SearchBox;
