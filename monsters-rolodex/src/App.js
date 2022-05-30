@@ -7,6 +7,7 @@ import CardList from "./CardList";
 const App = () => {
   const [searchField, setSearchField] = useState("");
   const [monsters, setMonsters] = useState([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
 
   const getMonsters = async () => {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -17,13 +18,17 @@ const App = () => {
     getMonsters();
   }, []);
 
+  useEffect(() => {
+    const newFilteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    });
+    setFilteredMonsters(newFilteredMonsters);
+  }, [monsters, searchField]);
+
   const onSearchChange = (e) => {
     const searchFieldString = e.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };
-  const filteredMonsters = monsters.filter((monster) => {
-    return monster.name.toLowerCase().includes(searchField);
-  });
 
   return (
     <div className="App">
