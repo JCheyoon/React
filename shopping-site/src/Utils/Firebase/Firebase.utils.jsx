@@ -4,17 +4,10 @@ import {
   signInWithPopup,
   signInWithRedirect,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBrVfXrG1yZvmPl85gXqo-dIX4-tUG06ik",
-  authDomain: "jc-crown-shopping-db.firebaseapp.com",
-  projectId: "jc-crown-shopping-db",
-  storageBucket: "jc-crown-shopping-db.appspot.com",
-  messagingSenderId: "969389879327",
-  appId: "1:969389879327:web:be706e614775ecbc6f252a",
-};
+import { firebaseConfig } from "./firebase-config";
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
@@ -28,12 +21,12 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 
-export const signInWithGoogleRedirect = () =>
-  signInWithRedirect(auth, googleProvider);
-
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInfo = {}
+) => {
   if (!userAuth) return;
 
   const userDocRef = doc(db, "users", userAuth.uid);
@@ -46,7 +39,12 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     const createAt = new Date();
 
     try {
-      await setDoc(userDocRef, { displayName, email, createAt });
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createAt,
+        ...additionalInfo, // 만약 displayName 이 null이면 우리가 additionalInfo를 줘서 displayname :"cheyoon" 이런식으로 전달되서 null이아니게됨
+      });
     } catch (error) {
       console.log("error creating user", error.message);
     }
@@ -57,5 +55,5 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 export const createAuthUserWithEmail = async (email, password) => {
   if (!email || !password) return;
 
-  return await createAuthUserWithEmail(auth, email, password);
+  return await createUserWithEmailAndPassword(auth, email, password);
 };

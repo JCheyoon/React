@@ -1,4 +1,11 @@
+import "./Sign-up-form.style.scss";
 import { useState } from "react";
+
+import FormInput from "../Form-input/Form-input.componet";
+import {
+  createAuthUserWithEmail,
+  createUserDocumentFromAuth,
+} from "../Utils/Firebase/Firebase.utils";
 
 const defaultFormValue = {
   displayName: "",
@@ -12,23 +19,43 @@ const SingUpForm = () => {
   const { displayName, email, password, confirmPassword } = formFields;
   // console.log(formFields);
 
-  const handlerSubmit = async (e) => {
+  const resetFormFields = () => {
+    setFormFields(defaultFormValue);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("password do not match");
+      return;
+    }
+    try {
+      const { user } = await createAuthUserWithEmail(email, password);
+
+      await createUserDocumentFromAuth(user, { displayName });
+      resetFormFields();
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("can not creat user, email already in use");
+      } else {
+        console.error(error);
+      }
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value);
 
     setFormFields({ ...formFields, [name]: value });
   };
 
   return (
-    <div>
-      <h1>Sign up with your email and password</h1>
-      <form onSubmit={() => {}}>
-        <label>Display Name</label>
-        <input
+    <div className="sign-up-container">
+      <h2>Don't have a account?</h2>
+      <span>Sign up with your email and password</span>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          label="Display Name"
           type="text"
           required
           onChange={handleChange}
@@ -36,8 +63,8 @@ const SingUpForm = () => {
           value={displayName}
         />
 
-        <label>Email</label>
-        <input
+        <FormInput
+          label="Email"
           type="email"
           required
           onChange={handleChange}
@@ -45,8 +72,8 @@ const SingUpForm = () => {
           value={email}
         />
 
-        <label>Password</label>
-        <input
+        <FormInput
+          label="Password"
           type="password"
           required
           onChange={handleChange}
@@ -54,9 +81,9 @@ const SingUpForm = () => {
           value={password}
         />
 
-        <label>Confirm Password</label>
-        <input
-          type="confirmPassword"
+        <FormInput
+          label="Confirm Password"
+          type="password"
           required
           onChange={handleChange}
           name="confirmPassword"
