@@ -17,3 +17,5 @@ const Button = ({ children, buttonType, ...otherProps }) => {
 };
 
 export default Button;
+
+// BUTTON_TYPE_CLASSES.inverted === BUTTON_TYPE_CLASSES['inverted']
