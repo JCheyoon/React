@@ -1,5 +1,5 @@
 import "./Sign-in-form.style.scss";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 
 import FormInput from "../Form-input/Form-input.componet";
 import {
@@ -18,7 +18,6 @@ const defaultFormValue = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormValue);
   const { email, password } = formFields;
-
   const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
@@ -34,7 +33,6 @@ const SignInForm = () => {
 
     try {
       const { user } = await signInAuthUserWithEmailAndPw(email, password);
-
       setCurrentUser(user);
       resetFormFields();
     } catch (error) {
