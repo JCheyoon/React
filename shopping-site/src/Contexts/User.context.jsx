@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { onAuthStateChangedListener } from "../Utils/Firebase/Firebase.utils";
 
-//actual value thet you want to access
+//actual value that you want to access
 export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => null,
