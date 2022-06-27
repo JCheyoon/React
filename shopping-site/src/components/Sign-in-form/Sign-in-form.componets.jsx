@@ -1,14 +1,14 @@
 import "./Sign-in-form.style.scss";
 import { useContext, useState } from "react";
 
-import FormInput from "../Form-input/Form-input.componet";
+import FormInput from "../category-item/Form-input/Form-input.componet";
 import {
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPw,
   signInWithGooglePopup,
-} from "../Utils/Firebase/Firebase.utils";
+} from "../../Utils/Firebase/Firebase.utils";
 import Button from "../Button/Button.component";
-import { UserContext } from "../Contexts/User.context";
+import { UserContext } from "../../Contexts/User.context";
 
 const defaultFormValue = {
   email: "",
