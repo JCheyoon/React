@@ -2,11 +2,22 @@ import { createContext, useState } from "react";
 
 const addCartItem = (cartItem, productToAdd) => {
   //1.find if cartitems contains productToAdd
+  const exisitingCartItem = cartItem.find(
+    (cartItem) => cartItem.id === productToAdd.id
+  );
 
   //2.if found, increment quantity
+  if (exisitingCartItem) {
+    return cartItem.map((cartItem) =>
+      cartItem.id === productToAdd.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        : cartItem
+    );
+  }
 
   //3.return new array with modified cartItems/new cart item
-  [{ ...productToAdd, quantity: 1 }];
+  return [...cartItem, { ...productToAdd, quantity: 1 }];
+  // = cart with object has all of fields from product to add and additional quantity is equal to 1
 };
 
 export const CartContext = createContext({
@@ -24,7 +35,13 @@ export const CartProvider = ({ children }) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
 
-  const value = { isCartOpen, setIsCartOpen };
+  const value = {
+    isCartOpen,
+    setIsCartOpen,
+    cartItems,
+    setCartItems,
+    addItemToCart,
+  };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
