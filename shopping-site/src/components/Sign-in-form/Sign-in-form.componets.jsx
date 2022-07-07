@@ -1,13 +1,13 @@
 import "./Sign-in-form.style.scss";
 import { useContext, useState } from "react";
 
-import FormInput from "../category-item/Form-input/Form-input.componet";
+import FormInput from "../Form-input/Form-input.componet";
 import {
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPw,
   signInWithGooglePopup,
 } from "../../Utils/Firebase/Firebase.utils";
-import Button from "../Button/Button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../Button/Button.component";
 import { UserContext } from "../../Contexts/User.context";
 
 const defaultFormValue = {
@@ -79,7 +79,11 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" onClick={SignInWithGoogle}>
+          <Button
+            type="button"
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            onClick={SignInWithGoogle}
+          >
             Google Sign In
           </Button>
         </div>

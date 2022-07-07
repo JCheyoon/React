@@ -1,7 +1,7 @@
 import "./Sign-up-form.style.scss";
 import { useState } from "react";
 
-import FormInput from "../category-item/Form-input/Form-input.componet";
+import FormInput from "../Form-input/Form-input.componet";
 
 import {
   createAuthUserWithEmail,
